@@ -1,0 +1,446 @@
+{
+  "info": {
+    "_postman_id": "bd144a36-88a2-4e8b-b9af-f6af9f48b844",
+    "name": "API Hunter",
+    "description": "Coleção de testes da API Hunter",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54355363"
+  },
+  "item": [
+    {
+      "name": "Leads",
+      "item": [
+        {
+          "name": "Criar novo lead",
+          "item": [
+            {
+              "name": "POST - Criar Novo Lead",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.iterationData.get(\"email_lead\")\r",
+                      "pm.iterationData.get(\"first_name_lead\")\r",
+                      "pm.iterationData.get(\"last_name_lead\")\r",
+                      "pm.iterationData.get(\"position_lead\")\r",
+                      "pm.iterationData.get(\"company_lead\")\r",
+                      "pm.iterationData.get(\"company_industry_lead\")\r",
+                      "\r",
+                      " \r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"{{email_lead}}\",\r\n    \"first_name\": \"{{first_name_lead}}\",\r\n    \"last_name\": \"{{last_name_lead}}\",\r\n    \"position\": \"{{position_lead}}\",\r\n    \"company\": \"{{company_lead}}\",\r\n    \"company_industry\": \"{{company_industry_lead}}\"\r\n}\r\n\r\n/*\r\n{\r\n    \"email\": \"ana347@ana.com.br\",\r\n    \"first_name\": \"Ana347\",\r\n    \"last_name\": \"Julia347\",\r\n    \"position\": \"Sócio347\",\r\n    \"company\": \"Casa346\",\r\n    \"company_industry\": \"TI347\"\r\n}\r\n\r\n\r\n*/\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{url_base}}leads",
+                  "host": [
+                    "{{url_base}}leads"
+                  ]
+                },
+                "description": "POST - Criar novo Lead"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Recuperar todos leads cadastrados",
+          "item": [
+            {
+              "name": "GET - Todos Leads",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{url_base}}leads",
+                  "host": [
+                    "{{url_base}}leads"
+                  ]
+                },
+                "description": "Recuperar Leads cadastrados"
+              },
+              "response": []
+            },
+            {
+              "name": "GET - Busca  Lead Específico",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{url_base}}leads/{{id_lead}}\n",
+                  "host": [
+                    "{{url_base}}leads"
+                  ],
+                  "path": [
+                    "{{id_lead}}\n"
+                  ]
+                },
+                "description": "Recuperar Leads cadastrados com ID específico"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Editar lead",
+          "item": [
+            {
+              "name": "PUT - Editar Lead",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.iterationData.get(\"email_lead_edit\")\r",
+                      "pm.iterationData.get(\"first_name_lead_edit\")\r",
+                      "pm.iterationData.get(\"last_name_lead_edit\")\r",
+                      "pm.iterationData.get(\"position_lead_edit\")\r",
+                      "pm.iterationData.get(\"company_lead_edit\")\r",
+                      "pm.iterationData.get(\"company_industry_lead_edit\")"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"{{email_lead_edit}}\",\r\n    \"first_name\": \"{{first_name_lead_edit}}\",\r\n    \"last_name\": \"{{last_name_lead_edit}}\",\r\n    \"position\": \"{{position_lead_edit}}\",\r\n    \"company\": \"{{company_lead_edit}}\",\r\n    \"company_industry\": \"{{company_industry_lead_edit}}\"\r\n}\r\n\r\n/*\r\n{\r\n    \"email\": \"ana_editado348@ana.com.br\",\r\n    \"first_name\": \"Ana_editado348\",\r\n    \"last_name\": \"Julia_editado348\",\r\n    \"position\": \"Sócio_editado348\",\r\n    \"company\": \"Casa_editado348\",\r\n    \"company_industry\": \"TI_editado348\"\r\n}\r\n*/\r\n\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{url_base}}leads/{{id_lead}}",
+                  "host": [
+                    "{{url_base}}leads"
+                  ],
+                  "path": [
+                    "{{id_lead}}"
+                  ]
+                },
+                "description": "Editar um lead consultado pelo ID"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Excluir lead",
+          "item": [
+            {
+              "name": "DEL - Excluir lead",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{url_base}}leads/{{id_lead}}",
+                  "host": [
+                    "{{url_base}}leads"
+                  ],
+                  "path": [
+                    "{{id_lead}}"
+                  ]
+                },
+                "description": "Excluir lead específico pelo ID"
+              },
+              "response": []
+            }
+          ]
+        }
+      ],
+      "description": "Pastas para suítes de testes leads"
+    },
+    {
+      "name": "Leads_Lists",
+      "item": [
+        {
+          "name": "Criar nova lista de lead",
+          "item": [
+            {
+              "name": "POST - Criar Novo Lead List",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.iterationData.get(\"name_lead_list\")"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"{{name_lead_list}}\"\r\n}\r\n\r\n/*\r\n{\r\n    \"name\": \"Lista de Leads Ana 347\"\r\n}\r\n*/\r\n\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{url_base}}leads_lists",
+                  "host": [
+                    "{{url_base}}leads_lists"
+                  ]
+                },
+                "description": "POST - Criar novo Lead List"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Recuperar todas listas de leads cadastradas",
+          "item": [
+            {
+              "name": "GET - Todos Leads Lists",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{url_base}}leads_lists",
+                  "host": [
+                    "{{url_base}}leads_lists"
+                  ]
+                },
+                "description": "Recuperar Leads Lists cadastrados"
+              },
+              "response": []
+            },
+            {
+              "name": "GET - Busca  Lead Lists Específico",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{url_base}}leads_lists/{{id_lead_list}}",
+                  "host": [
+                    "{{url_base}}leads_lists"
+                  ],
+                  "path": [
+                    "{{id_lead_list}}"
+                  ]
+                },
+                "description": "Recuperar Leads Lists cadastrados com ID específico"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Editar lista de lead",
+          "item": [
+            {
+              "name": "PUT - Editar Lead List",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.iterationData.get(\"name_lead_list_edit\")"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"{{name_lead_list_edit}}\"\r\n}\r\n\r\n/*\r\n{\r\n    \"name\": \"Lista de Leads Ana Editado 348\"\r\n}\r\n*/\r\n\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{url_base}}leads_lists/{{id_lead_list}}",
+                  "host": [
+                    "{{url_base}}leads_lists"
+                  ],
+                  "path": [
+                    "{{id_lead_list}}"
+                  ]
+                },
+                "description": "POST - Editar Lead List"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Excluir lista de lead",
+          "item": [
+            {
+              "name": "DEL - Excluir  Lead Lists",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{url_base}}leads_lists/{{id_lead_list}}",
+                  "host": [
+                    "{{url_base}}leads_lists"
+                  ],
+                  "path": [
+                    "{{id_lead_list}}"
+                  ]
+                },
+                "description": "Excluir Lead Lists cadastrados com ID específico"
+              },
+              "response": []
+            }
+          ]
+        }
+      ],
+      "description": "Pastas para suítes de testes leads list"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "in",
+        "value": "query",
+        "type": "string"
+      },
+      {
+        "key": "key",
+        "value": "api_key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "f4d7fec70b0b1d7d66c4959acbfb5271827d3c70",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "const method = pm.request.method;\r",
+          "const response = pm.response;\r",
+          "\r",
+          "// GET\r",
+          "if (method === 'GET') {\r",
+          "    pm.test(\"Status code is 200\", function () {\r",
+          "        pm.response.to.have.status(200);\r",
+          "    });\r",
+          "\r",
+          "    pm.test(\"Status code name is OK\", function () {\r",
+          "        pm.response.to.have.status(\"OK\");\r",
+          "    });\r",
+          "}\r",
+          "\r",
+          "// GET e POST\r",
+          "if (method === 'GET' || method === 'POST') {\r",
+          "    pm.test(\"Response time < 15000ms\", function () {\r",
+          "        pm.expect(response.responseTime).to.be.below(15000);\r",
+          "    });\r",
+          "}\r",
+          "\r",
+          "// POST\r",
+          "if (method === 'POST') {\r",
+          "    pm.test(\"POST sucesso\", function () {\r",
+          "        pm.expect(response.code).to.be.oneOf([200, 201, 202]);\r",
+          "    });\r",
+          "\r",
+          "    pm.test(\"Status code name is Created\", function () {\r",
+          "        pm.response.to.have.status(\"Created\");\r",
+          "    });\r",
+          "\r",
+          "    // Só processa JSON se for JSON\r",
+          "    if (response.headers.get(\"Content-Type\")?.includes(\"application/json\")) {\r",
+          "        const body = response.json();\r",
+          "\r",
+          "        if (pm.info.requestName === 'POST - Criar Novo Lead') {\r",
+          "            pm.environment.set('id_lead', body.data?.id);\r",
+          "        }\r",
+          "\r",
+          "        if (pm.info.requestName === 'POST - Criar Novo Lead List') {\r",
+          "            pm.environment.set('id_lead_list', body.data?.id);\r",
+          "        }\r",
+          "    }\r",
+          "}\r",
+          "\r",
+          "// PUT e DELETE\r",
+          "if (method === 'PUT' || method === 'DELETE') {\r",
+          "    pm.test(\"Status code 204\", function () {\r",
+          "        pm.response.to.have.status(204);\r",
+          "    });\r",
+          "\r",
+          "    pm.test(\"Status code name No Content\", function () {\r",
+          "        pm.response.to.have.status(\"No Content\");\r",
+          "    });\r",
+          "}"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "value": ""
+    }
+  ]
+}
