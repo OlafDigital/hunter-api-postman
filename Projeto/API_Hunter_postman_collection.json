@@ -253,14 +253,15 @@
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "/*",
+                      "",
                       "pm.test(\"Resposta contém id do lead\", function () {",
                       "    const json = pm.response.json();",
+                      "",
                       "    pm.expect(json).to.have.property(\"data\");",
-                      "    pm.expect(json.data).to.have.property(\"lead\");",
-                      "    pm.expect(json.data.lead).to.have.property(\"id\");",
+                      "    pm.expect(json.data).to.have.property(\"id\");",
+                      "    pm.expect(json.data.id).to.be.a(\"number\");",
                       "});",
-                      "*/"
+                      ""
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -506,15 +507,18 @@
                 {
                   "listen": "test",
                   "script": {
-                    "type": "text/javascript",
                     "exec": [
                       "pm.test(\"Resposta contém id da lead list\", function () {",
                       "    const json = pm.response.json();",
+                      "",
                       "    pm.expect(json).to.have.property(\"data\");",
-                      "    pm.expect(json.data).to.have.property(\"leads_list\");",
-                      "    pm.expect(json.data.leads_list).to.have.property(\"id\");",
+                      "    pm.expect(json.data).to.have.property(\"id\");",
+                      "    pm.expect(json.data.id).to.be.a(\"number\");",
                       "});"
-                    ]
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
                   }
                 }
               ],
