@@ -19,40 +19,44 @@
                 {
                   "listen": "prerequest",
                   "script": {
-                    "exec": [
-                      "pm.iterationData.get(\"email_lead\")\r",
-                      "pm.iterationData.get(\"first_name_lead\")\r",
-                      "pm.iterationData.get(\"last_name_lead\")\r",
-                      "pm.iterationData.get(\"position_lead\")\r",
-                      "pm.iterationData.get(\"company_lead\")\r",
-                      "pm.iterationData.get(\"company_industry_lead\")\r",
-                      "\r",
-                      " \r",
-                      ""
-                    ],
                     "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
+                    "exec": [
+                      "pm.environment.set(\"email_lead\", pm.iterationData.get(\"email_lead\"));",
+                      "pm.environment.set(\"first_name_lead\", pm.iterationData.get(\"first_name_lead\"));",
+                      "pm.environment.set(\"last_name_lead\", pm.iterationData.get(\"last_name_lead\"));",
+                      "pm.environment.set(\"position_lead\", pm.iterationData.get(\"position_lead\"));",
+                      "pm.environment.set(\"company_lead\", pm.iterationData.get(\"company_lead\"));",
+                      "pm.environment.set(\"company_industry_lead\", pm.iterationData.get(\"company_industry_lead\"));"
+                    ]
                   }
                 },
                 {
                   "listen": "test",
                   "script": {
-                    "exec": [
-                      ""
-                    ],
                     "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
+                    "exec": [
+                      "pm.test(\"Resposta contém id do lead criado\", function () {",
+                      "    const json = pm.response.json();",
+                      "    pm.expect(json).to.have.property(\"data\");",
+                      "    pm.expect(json.data).to.have.property(\"lead\");",
+                      "    pm.expect(json.data.lead).to.have.property(\"id\");",
+                      "    pm.environment.set(\"id_lead\", json.data.lead.id);",
+                      "});"
+                    ]
                   }
                 }
               ],
               "request": {
                 "method": "POST",
-                "header": [],
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"email\": \"{{email_lead}}\",\r\n    \"first_name\": \"{{first_name_lead}}\",\r\n    \"last_name\": \"{{last_name_lead}}\",\r\n    \"position\": \"{{position_lead}}\",\r\n    \"company\": \"{{company_lead}}\",\r\n    \"company_industry\": \"{{company_industry_lead}}\"\r\n}\r\n\r\n/*\r\n{\r\n    \"email\": \"ana347@ana.com.br\",\r\n    \"first_name\": \"Ana347\",\r\n    \"last_name\": \"Julia347\",\r\n    \"position\": \"Sócio347\",\r\n    \"company\": \"Casa346\",\r\n    \"company_industry\": \"TI347\"\r\n}\r\n\r\n\r\n*/\r\n",
+                  "raw": "\r\n{\r\n    \"email\": \"ana401@ana.com.br\",\r\n    \"first_name\": \"Ana401\",\r\n    \"last_name\": \"Julia401\",\r\n    \"position\": \"Sócio401\",\r\n    \"company\": \"Casa401\",\r\n    \"company_industry\": \"TI401\"\r\n}\r\n/*\r\n{\r\n    \"email\": \"{{email_lead}}\",\r\n    \"first_name\": \"{{first_name_lead}}\",\r\n    \"last_name\": \"{{last_name_lead}}\",\r\n    \"position\": \"{{position_lead}}\",\r\n    \"company\": \"{{company_lead}}\",\r\n    \"company_industry\": \"{{company_industry_lead}}\"\r\n}\r\n*/\r\n\r\n\r\n\r\n",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -65,9 +69,131 @@
                     "{{url_base}}leads"
                   ]
                 },
-                "description": "POST - Criar novo Lead"
+                "description": "POST - Teste de criação de novo Lead\n\nResultado esperados:\n\n- Response Code \\[200, 201, 202\\]\n    \n- String \"Created\" no Response Body\n    \n- Execução <7s"
               },
-              "response": []
+              "response": [
+                {
+                  "name": "POST - Criar Novo Lead",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "/*\r\n{\r\n    \"email\": \"{{email_lead}}\",\r\n    \"first_name\": \"{{first_name_lead}}\",\r\n    \"last_name\": \"{{last_name_lead}}\",\r\n    \"position\": \"{{position_lead}}\",\r\n    \"company\": \"{{company_lead}}\",\r\n    \"company_industry\": \"{{company_industry_lead}}\"\r\n}\r\n*/\r\n\r\n{\r\n    \"email\": \"ana401@ana.com.br\",\r\n    \"first_name\": \"Ana401\",\r\n    \"last_name\": \"Julia401\",\r\n    \"position\": \"Sócio401\",\r\n    \"company\": \"Casa401\",\r\n    \"company_industry\": \"TI401\"\r\n}\r\n\r\n\r\n\r\n",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{url_base}}leads",
+                      "host": [
+                        "{{url_base}}leads"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": ":status",
+                      "value": 201
+                    },
+                    {
+                      "key": "date",
+                      "value": "Fri, 01 May 2026 20:11:22 GMT"
+                    },
+                    {
+                      "key": "content-type",
+                      "value": "application/json; charset=utf-8"
+                    },
+                    {
+                      "key": "content-length",
+                      "value": "772"
+                    },
+                    {
+                      "key": "location",
+                      "value": "https://api.hunter.io/v2/leads/363005662"
+                    },
+                    {
+                      "key": "access-control-allow-headers",
+                      "value": "Email-Hunter-Origin,mcp-protocol-version"
+                    },
+                    {
+                      "key": "access-control-allow-methods",
+                      "value": "GET, POST, PUT, DELETE, OPTIONS"
+                    },
+                    {
+                      "key": "access-control-allow-origin",
+                      "value": "*"
+                    },
+                    {
+                      "key": "cache-control",
+                      "value": "max-age=0, private, must-revalidate"
+                    },
+                    {
+                      "key": "etag",
+                      "value": "W/\"77f2c7f5dc0b6d99323dacd00a30f1e3\""
+                    },
+                    {
+                      "key": "permissions-policy",
+                      "value": "interest-cohort=()"
+                    },
+                    {
+                      "key": "referrer-policy",
+                      "value": "strict-origin-when-cross-origin"
+                    },
+                    {
+                      "key": "server",
+                      "value": "cloudflare"
+                    },
+                    {
+                      "key": "set-cookie",
+                      "value": "XSRF-TOKEN=yYCYerFo8AKN-kbxYrYNFd3rtjdH-vf6YZKK_2cIYKUFlbBJwBmkih2auhlJ4Yg-VPL4JqMZ_gTu-TfmgNIaMw; path=/; samesite=lax"
+                    },
+                    {
+                      "key": "x-content-type-options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "x-permitted-cross-domain-policies",
+                      "value": "none"
+                    },
+                    {
+                      "key": "x-request-id",
+                      "value": "197fd31e-b712-4b75-8495-021117261d6b"
+                    },
+                    {
+                      "key": "x-runtime",
+                      "value": "0.506691"
+                    },
+                    {
+                      "key": "x-user",
+                      "value": "6925221"
+                    },
+                    {
+                      "key": "cf-cache-status",
+                      "value": "DYNAMIC"
+                    },
+                    {
+                      "key": "strict-transport-security",
+                      "value": "max-age=31536000; includeSubDomains; preload"
+                    },
+                    {
+                      "key": "cf-ray",
+                      "value": "9f516f52982b5213-UDI"
+                    },
+                    {
+                      "key": "alt-svc",
+                      "value": "h3=\":443\"; ma=86400"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"data\": {\n        \"id\": 363005662,\n        \"email\": \"ana401@ana.com.br\",\n        \"first_name\": \"Ana401\",\n        \"last_name\": \"Julia401\",\n        \"position\": \"Sócio401\",\n        \"company\": \"Casa401\",\n        \"company_industry\": \"TI401\",\n        \"confidence_score\": null,\n        \"website\": \"ana.com.br\",\n        \"country_code\": null,\n        \"company_size\": null,\n        \"source\": null,\n        \"linkedin_url\": null,\n        \"phone_number\": null,\n        \"twitter\": null,\n        \"sync_status\": null,\n        \"notes\": null,\n        \"sending_status\": null,\n        \"last_activity_at\": null,\n        \"last_contacted_at\": null,\n        \"verification\": {\n            \"date\": null,\n            \"status\": null\n        },\n        \"leads_list\": {\n            \"id\": 11412428,\n            \"name\": \"Olaf's leads\",\n            \"leads_count\": 3\n        },\n        \"created_at\": \"2026-05-01 20:11:22 UTC\"\n    }\n}"
+                }
+              ]
             }
           ]
         },
@@ -76,6 +202,31 @@
           "item": [
             {
               "name": "GET - Todos Leads",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Resposta contém lista de leads\", function () {",
+                      "    const json = pm.response.json();",
+                      "    pm.expect(json).to.have.property(\"data\");",
+                      "    pm.expect(json.data).to.have.property(\"leads\");",
+                      "    pm.expect(json.data.leads).to.be.an(\"array\");",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "packages": {},
+                    "type": "text/javascript"
+                  }
+                }
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -91,16 +242,32 @@
             },
             {
               "name": "GET - Busca  Lead Específico",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Resposta contém id do lead\", function () {",
+                      "    const json = pm.response.json();",
+                      "    pm.expect(json).to.have.property(\"data\");",
+                      "    pm.expect(json.data).to.have.property(\"lead\");",
+                      "    pm.expect(json.data.lead).to.have.property(\"id\");",
+                      "});"
+                    ]
+                  }
+                }
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{url_base}}leads/{{id_lead}}\n",
+                  "raw": "{{url_base}}leads/{{id_lead}}",
                   "host": [
                     "{{url_base}}leads"
                   ],
                   "path": [
-                    "{{id_lead}}\n"
+                    "{{id_lead}}"
                   ]
                 },
                 "description": "Recuperar Leads cadastrados com ID específico"
@@ -119,25 +286,44 @@
                   "listen": "prerequest",
                   "script": {
                     "exec": [
-                      "pm.iterationData.get(\"email_lead_edit\")\r",
-                      "pm.iterationData.get(\"first_name_lead_edit\")\r",
-                      "pm.iterationData.get(\"last_name_lead_edit\")\r",
-                      "pm.iterationData.get(\"position_lead_edit\")\r",
-                      "pm.iterationData.get(\"company_lead_edit\")\r",
-                      "pm.iterationData.get(\"company_industry_lead_edit\")"
+                      "pm.environment.set(\"email_lead_edit\", pm.iterationData.get(\"email_lead_edit\"));",
+                      "pm.environment.set(\"first_name_lead_edit\", pm.iterationData.get(\"first_name_lead_edit\"));",
+                      "pm.environment.set(\"last_name_lead_edit\", pm.iterationData.get(\"last_name_lead_edit\"));",
+                      "pm.environment.set(\"position_lead_edit\", pm.iterationData.get(\"position_lead_edit\"));",
+                      "pm.environment.set(\"company_lead_edit\", pm.iterationData.get(\"company_lead_edit\"));",
+                      "pm.environment.set(\"company_industry_lead_edit\", pm.iterationData.get(\"company_industry_lead_edit\"));"
                     ],
                     "type": "text/javascript",
                     "packages": {},
                     "requests": {}
                   }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code é 200 ou 204\", function () {",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+                      "});",
+                      "pm.test(\"Tempo de resposta menor que 7000ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(7000);",
+                      "});"
+                    ]
+                  }
                 }
               ],
               "request": {
                 "method": "PUT",
-                "header": [],
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"email\": \"{{email_lead_edit}}\",\r\n    \"first_name\": \"{{first_name_lead_edit}}\",\r\n    \"last_name\": \"{{last_name_lead_edit}}\",\r\n    \"position\": \"{{position_lead_edit}}\",\r\n    \"company\": \"{{company_lead_edit}}\",\r\n    \"company_industry\": \"{{company_industry_lead_edit}}\"\r\n}\r\n\r\n/*\r\n{\r\n    \"email\": \"ana_editado348@ana.com.br\",\r\n    \"first_name\": \"Ana_editado348\",\r\n    \"last_name\": \"Julia_editado348\",\r\n    \"position\": \"Sócio_editado348\",\r\n    \"company\": \"Casa_editado348\",\r\n    \"company_industry\": \"TI_editado348\"\r\n}\r\n*/\r\n\r\n",
+                  "raw": "{\n    \"email\": \"ana_editado@ana.com.br\",\n    \"first_name\": \"Ana_Editado\",\n    \"last_name\": \"Julia_Editado\",\n    \"position\": \"Sócio_Editado\",\n    \"company\": \"Casa_Editado\",\n    \"company_industry\": \"TI_Editado\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -164,6 +350,22 @@
           "item": [
             {
               "name": "DEL - Excluir lead",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code é 200 ou 204\", function () {",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+                      "});",
+                      "pm.test(\"Tempo de resposta menor que 7000ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(7000);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
               "request": {
                 "method": "DELETE",
                 "header": [],
@@ -197,18 +399,36 @@
                 {
                   "listen": "prerequest",
                   "script": {
-                    "exec": [
-                      "pm.iterationData.get(\"name_lead_list\")"
-                    ],
                     "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
+                    "exec": [
+                      "pm.environment.set(\"name_lead_list\", pm.iterationData.get(\"name_lead_list\"));"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Resposta contém id da lead list criada\", function () {",
+                      "    const json = pm.response.json();",
+                      "    pm.expect(json).to.have.property(\"data\");",
+                      "    pm.expect(json.data).to.have.property(\"leads_list\");",
+                      "    pm.expect(json.data.leads_list).to.have.property(\"id\");",
+                      "    pm.environment.set(\"id_lead_list\", json.data.leads_list.id);",
+                      "});"
+                    ]
                   }
                 }
               ],
               "request": {
                 "method": "POST",
-                "header": [],
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "body": {
                   "mode": "raw",
                   "raw": "{\r\n    \"name\": \"{{name_lead_list}}\"\r\n}\r\n\r\n/*\r\n{\r\n    \"name\": \"Lista de Leads Ana 347\"\r\n}\r\n*/\r\n\r\n",
@@ -235,6 +455,22 @@
           "item": [
             {
               "name": "GET - Todos Leads Lists",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Resposta contém lista de leads lists\", function () {",
+                      "    const json = pm.response.json();",
+                      "    pm.expect(json).to.have.property(\"data\");",
+                      "    pm.expect(json.data).to.have.property(\"leads_lists\");",
+                      "    pm.expect(json.data.leads_lists).to.be.an(\"array\");",
+                      "});"
+                    ]
+                  }
+                }
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -250,6 +486,22 @@
             },
             {
               "name": "GET - Busca  Lead Lists Específico",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Resposta contém id da lead list\", function () {",
+                      "    const json = pm.response.json();",
+                      "    pm.expect(json).to.have.property(\"data\");",
+                      "    pm.expect(json.data).to.have.property(\"leads_list\");",
+                      "    pm.expect(json.data.leads_list).to.have.property(\"id\");",
+                      "});"
+                    ]
+                  }
+                }
+              ],
               "request": {
                 "method": "GET",
                 "header": [],
@@ -277,18 +529,35 @@
                 {
                   "listen": "prerequest",
                   "script": {
-                    "exec": [
-                      "pm.iterationData.get(\"name_lead_list_edit\")"
-                    ],
                     "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
+                    "exec": [
+                      "pm.environment.set(\"name_lead_list_edit\", pm.iterationData.get(\"name_lead_list_edit\"));"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code é 204\", function () {",
+                      "    pm.response.to.have.status(204);",
+                      "});",
+                      "pm.test(\"Tempo de resposta menor que 7000ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(7000);",
+                      "});"
+                    ]
                   }
                 }
               ],
               "request": {
                 "method": "PUT",
-                "header": [],
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "body": {
                   "mode": "raw",
                   "raw": "{\r\n    \"name\": \"{{name_lead_list_edit}}\"\r\n}\r\n\r\n/*\r\n{\r\n    \"name\": \"Lista de Leads Ana Editado 348\"\r\n}\r\n*/\r\n\r\n",
@@ -318,6 +587,22 @@
           "item": [
             {
               "name": "DEL - Excluir  Lead Lists",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code é 200 ou 204\", function () {",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+                      "});",
+                      "pm.test(\"Tempo de resposta menor que 7000ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(7000);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
               "request": {
                 "method": "DELETE",
                 "header": [],
