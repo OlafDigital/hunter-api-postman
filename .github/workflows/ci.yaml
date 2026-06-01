@@ -1,51 +1,52 @@
 name: API Tests
 
 on:
-  push:
-  pull_request:
-  workflow_dispatch:
+push:
+pull_request:
+workflow_dispatch:
 
 jobs:
-  postman-tests:
-    runs-on: ubuntu-latest
+postman-tests:
+runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
+steps:
+  - name: Checkout
+    uses: actions/checkout@v4
 
-      - name: Install Newman
-        run: |
-          npm install -g newman
-          npm install -g newman-reporter-htmlextra
+  - name: Setup Node
+    uses: actions/setup-node@v4
+    with:
+      node-version: 20
 
-      - name: Create Reports Folder
-        run: mkdir -p reports
+  - name: Install Newman
+    run: |
+      npm install -g newman
+      npm install -g newman-reporter-htmlextra
 
-      - name: Run Leads
-        run: |
-          newman run Projeto/API_Hunter_postman_collection.json \
-          -e Projeto/HOMOL_postman_environment.json \
-          -d Dados/dados_csv.csv \
-          --folder Leads \
-          -r cli,htmlextra \
-          --reporter-htmlextra-export reports/leads.html
+  - name: Create Reports Folder
+    run: mkdir -p reports
 
-      - name: Run Leads Lists
-        run: |
-          newman run Projeto/API_Hunter_postman_collection.json \
-          -e Projeto/HOMOL_postman_environment.json \
-          -d Dados/dados_lead_list_csv.csv \
-          --folder "Leads Lists" \
-          -r cli,htmlextra \
-          --reporter-htmlextra-export reports/leads-lists.html
+  - name: Run Leads
+    run: |
+      newman run Projeto/API_Hunter_postman_collection.json \
+      -e Projeto/HOMOL_postman_environment.json \
+      -d Dados/dados_csv.csv \
+      --folder Leads \
+      -r cli,htmlextra \
+      --reporter-htmlextra-export reports/leads.html
 
-      - name: Upload Reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: api-reports
-          path: reports
+  - name: Run Leads Lists
+    run: |
+      newman run Projeto/API_Hunter_postman_collection.json \
+      -e Projeto/HOMOL_postman_environment.json \
+      -d Dados/dados_lead_list_csv.csv \
+      --folder Leads_Lists \
+      -r cli,htmlextra \
+      --reporter-htmlextra-export reports/leads-lists.html
+
+  - name: Upload Reports
+    uses: actions/upload-artifact@v4
+    with:
+      name: api-reports
+      path: reports
