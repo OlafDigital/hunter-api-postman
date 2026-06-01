@@ -1,0 +1,38 @@
+name: API Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  postman-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Instalar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Instalar Newman
+        run: |
+          npm install -g newman
+          npm install -g newman-reporter-htmlextra
+
+      - name: Executar Leads
+        run: |
+          newman run API_Hunter_postman_collection.json \
+          -e HOMOL_postman_environment.json \
+          -d dados_csv.csv \
+          --folder Leads
+
+      - name: Executar Leads Lists
+        run: |
+          newman run API_Hunter_postman_collection.json \
+          -e HOMOL_postman_environment.json \
+          -d dados_lead_list_csv.csv \
+          --folder Leads_Lists
